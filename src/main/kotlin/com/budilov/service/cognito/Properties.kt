@@ -24,7 +24,7 @@ object Properties {
     private val COGNITO_USER_POOL_ID: String = try {
         System.getenv("cognitoUserPoolId")
     } catch (e: Exception) {
-        "us-east-1_Blqt2tzfe"
+        "us-east-1_AAAAAA"
     }
 
     val JWK_URL = "https://cognito-idp.${REGION_NAME}.amazonaws.com/$COGNITO_USER_POOL_ID/.well-known/jwks.json"
