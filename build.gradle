@@ -1,0 +1,86 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.budilov'
+version = '1.0-SNAPSHOT'
+
+description = """spark-rest-service"""
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.21"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.1"
+        classpath "de.sebastianboegl.gradle.plugins:shadow-log4j-transformer:2.1.1"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: "de.sebastianboegl.shadow.transformer.log4j"
+
+repositories {
+    maven { url "http://repo.maven.apache.org/maven2" }
+    maven {
+        url "https://dl.bintray.com/kotlin/exposed"
+    }
+}
+
+jar {
+    // Not really needed here
+    manifest {
+        attributes 'Main-Class': 'com.budilov.service.spark.ServiceEndpointsKt'
+    }
+
+    // This line of code recursively collects and copies all of a project's files
+    // and adds them to the JAR itself. One can extend this task, to skip certain
+    // files or particular types at will
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+dependencies {
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.2.41'
+
+    // AWS
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-cognitoidentity', version: '1.11.390'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-ssm', version: '1.11.390'
+
+    //JWT
+    compile "com.auth0:java-jwt:3.3.0"
+    compile 'com.auth0:jwks-rsa:0.4.0'
+
+    // Gson
+    compile 'com.google.code.gson:gson:2.8.3'
+
+    // Spark
+    compile group: 'com.sparkjava', name: 'spark-core', version: '2.7.2'
+
+    // Logging
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
+//
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.5'
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.5'
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.8.5'
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+task deploy(type: Exec, dependsOn: 'shadowJar') {
+    commandLine 'serverless', 'deploy'
+}
