@@ -1,14 +1,14 @@
 version: '1'
 services:
   eventsService:
-    image: 490602810887.dkr.ecr.us-east-1.amazonaws.com/aurora-query-service:latest
+    image: 0000000000000.dkr.ecr.us-east-1.amazonaws.com/spark-rest-service:latest
     cpu_shares: 100
     # 200Mb
     mem_limit: 1024m
     ports:
     - "10000"
     environment:
-      COGNITO_USER_POOL_ID: us-east-1_Blqt2tzfe
+      COGNITO_USER_POOL_ID: us-east-1_00000000
       REGION_NAME: us-east-1
       SERVICE_PORT: 80
 
