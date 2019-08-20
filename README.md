@@ -33,4 +33,10 @@ docker run -p 8080:80 -it spark-rest-service
 
 # Test it out
 curl http://localhost:8080/query/health
+
+# Check the CONTAINER_ID
+docker ps
+
+# Stop the instance (use the container id value from the 'ps' command
+docker stop <CONTAINER_ID>
 ```
