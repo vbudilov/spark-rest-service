@@ -1,8 +1,8 @@
 FROM java:8
 ENV wdir=code
-ENV port=80
+ENV MY_SERVICE_PORT=8080
 # Install maven
-RUN apt-get update
+#RUN apt-get update
 
 WORKDIR /$wdir
 
@@ -15,6 +15,6 @@ ADD src /$wdir/src
 RUN echo "Running build"
 RUN ["/code/gradlew", "build"]
 
-EXPOSE $port
+EXPOSE $MY_SERVICE_PORT
 
 CMD ["/usr/lib/jvm/java-8-openjdk-amd64/bin/java", "-jar", "build/libs/code-1.0-SNAPSHOT.jar"]

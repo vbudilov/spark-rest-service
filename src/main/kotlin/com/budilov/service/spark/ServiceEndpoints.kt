@@ -1,5 +1,6 @@
 package com.budilov.service.spark
 
+import com.budilov.service.AppProperties
 import com.budilov.service.cognito.CognitoService
 import com.google.gson.Gson
 import org.slf4j.LoggerFactory
@@ -12,7 +13,7 @@ private val logger = LoggerFactory.getLogger("ServiceEndpoint")
 
 fun main(args: Array<String>) {
 
-    port(80)
+    port(AppProperties.MY_SERVICE_PORT)
     val maxThreads = 150
     val minThreads = 50
     val timeOutMillis = 10000

@@ -1,4 +1,4 @@
-# Sample Spark RESTful Service 
+### Sample Spark RESTful Service 
 
 I've been writing a lot of RESTful services lately and decided to utilize the SparkJava framework. Since most of my apps use Cognito for authN, I created the functionality to check the JWT tokens with each request.
 
@@ -23,13 +23,13 @@ If you like it, please star it :)
 
 P.S. You can definitely use the embedded ALB or API Gateway Cognito authorizers instead of using the code I created, but I needed to implement this functionality one way or another so decided to share. 
 
-#### Running locally
+##### Running locally
 ```
 # Let's build the image
 docker build -t spark-rest-service .
 
 # Let's run it
-docker run -p 8080:80 -it spark-rest-service
+docker run -p 8080:8080 -it spark-rest-service
 
 # Test it out
 curl http://localhost:8080/query/health
@@ -39,4 +39,11 @@ docker ps
 
 # Stop the instance (use the container id value from the 'ps' command
 docker stop <CONTAINER_ID>
+```
+
+##### Additional Docker cleanup 
+```docker
+# Remove the previously created image
+docker rmi spark-rest-service
+
 ```

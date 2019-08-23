@@ -7,14 +7,15 @@ import java.util.*
 
 object AppProperties {
 
-    private val parameters: Map<String, String>
+    private val parameters: Map<String, String> = emptyMap()
     private val parameterNames = arrayListOf("SecureItemOne", "SecureItemTwo")
     init {
-        parameters = loadParameters()
+
+//        parameters = loadParameters()
     }
 
     // Aurora Read Cluster URL with username/password
-    val dbReadUrl = parameters["SecureItemOne"] ?: throw Exception("Couldn't connect to SSM")
+//    val dbReadUrl = parameters["SecureItemOne"] ?: throw Exception("SecureItemOne is a required field but I couldn't retrieve it")
 
 
     /**
@@ -38,4 +39,13 @@ object AppProperties {
 
         return store
     }
+
+    // Environment variables
+    val MY_SERVICE_PORT: Int = try {
+        System.getenv("MY_SERVICE_PORT").toInt()
+    } catch (e: Exception) {
+        throw Exception("Couldn't retrieve the service port...can't function without it")
+    }
+
+
 }
