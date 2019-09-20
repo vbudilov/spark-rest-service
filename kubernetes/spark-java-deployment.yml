@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deployment-spark-rest
+  namespace: ns-spark
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: app-spark-rest
+    spec:
+      containers:
+        - image: 540403165297.dkr.ecr.us-east-1.amazonaws.com/spark-rest-service:1.0
+          imagePullPolicy: Always
+          name: app-spark-rest
+          ports:
+            - containerPort: 8080

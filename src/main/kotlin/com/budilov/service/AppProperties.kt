@@ -44,7 +44,8 @@ object AppProperties {
     val MY_SERVICE_PORT: Int = try {
         System.getenv("MY_SERVICE_PORT").toInt()
     } catch (e: Exception) {
-        throw Exception("Couldn't retrieve the service port...can't function without it")
+         8080
+//        throw Exception("Couldn't retrieve the service port...can't function without it")
     }
 
 
